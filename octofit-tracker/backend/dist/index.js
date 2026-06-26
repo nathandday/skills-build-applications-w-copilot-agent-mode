@@ -14,6 +14,10 @@ const database_1 = require("./config/database");
 const app = (0, express_1.default)();
 const port = 8000;
 app.use(express_1.default.json());
+app.use((req, _res, next) => {
+    console.log(`Incoming request: ${req.method} ${req.url}`);
+    next();
+});
 app.get('/api/health', (_req, res) => {
     res.json({
         status: 'ok',
@@ -33,7 +37,7 @@ const startServer = async () => {
     catch (error) {
         console.error('MongoDB connection error:', error);
     }
-    app.listen(port, () => {
+    app.listen(port, '0.0.0.0', () => {
         console.log(`Backend listening on port ${port}`);
         console.log(`API base URL: ${(0, apiUrl_1.getApiBaseUrl)()}`);
     });
