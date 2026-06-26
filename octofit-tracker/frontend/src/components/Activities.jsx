@@ -14,7 +14,7 @@ function Activities() {
       setError('');
 
       try {
-        const response = await fetch(getApiBaseUrl('/api/activities/'));
+        const response = await fetch(getApiBaseUrl('https://urban-orbit-vjvxxq77gjp3x969-8000.github.dev/api/activities/'));
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }
