@@ -9,6 +9,10 @@ import { connectDatabase } from './config/database';
 
 const app = express();
 const port = 8000;
+const codespaceName = process.env.CODESPACE_NAME;
+const apiBaseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev`
+  : 'http://localhost:8000';
 
 app.use(express.json());
 
@@ -21,7 +25,7 @@ app.get('/api/health', (_req, res) => {
   res.json({
     status: 'ok',
     message: 'OctoFit Tracker backend is running',
-    apiBaseUrl: getApiBaseUrl(),
+    apiBaseUrl,
   });
 });
 
@@ -40,7 +44,7 @@ const startServer = async () => {
 
   app.listen(port, '0.0.0.0', () => {
     console.log(`Backend listening on port ${port}`);
-    console.log(`API base URL: ${getApiBaseUrl()}`);
+    console.log(`API base URL: ${apiBaseUrl}`);
   });
 };
 
