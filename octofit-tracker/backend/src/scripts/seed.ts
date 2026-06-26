@@ -1,13 +1,13 @@
-import mongoose from 'mongoose';
 import { User } from '../models/user';
 import { Team } from '../models/team';
 import { Activity } from '../models/activity';
 import { LeaderboardEntry } from '../models/leaderboard';
 import { Workout } from '../models/workout';
+import { connectDatabase, disconnectDatabase } from '../config/database';
 
 // Seed the octofit_db database with test data
 const seedDatabase = async () => {
-  await mongoose.connect('mongodb://127.0.0.1:27017/octofit_db');
+  await connectDatabase();
   console.log('Connected to MongoDB for seeding');
 
   await Promise.all([
@@ -86,7 +86,7 @@ const seedDatabase = async () => {
   ]);
 
   console.log('Seed data inserted successfully');
-  await mongoose.disconnect();
+  await disconnectDatabase();
 };
 
 seedDatabase().catch((error) => {
