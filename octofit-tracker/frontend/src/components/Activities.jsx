@@ -14,7 +14,12 @@ function Activities() {
       setError('');
 
       try {
-        const response = await fetch(getApiBaseUrl('https://urban-orbit-vjvxxq77gjp3x969-8000.app.github.dev/api/activities/'));
+        const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
+        const apiUrl = codespaceName
+          ? `https://${codespaceName}-8000.app.github.dev/api/activities/`
+          : getApiBaseUrl('/api/activities/');
+
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }

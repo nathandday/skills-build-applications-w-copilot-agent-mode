@@ -14,7 +14,12 @@ function Workouts() {
       setError('');
 
       try {
-        const response = await fetch(getApiBaseUrl('/api/workouts/'));
+        const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
+        const apiUrl = codespaceName
+          ? `https://${codespaceName}-8000.app.github.dev/api/workouts/`
+          : getApiBaseUrl('/api/workouts/');
+
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }

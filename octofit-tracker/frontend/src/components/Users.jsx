@@ -14,7 +14,12 @@ function Users() {
       setError('');
 
       try {
-        const response = await fetch(getApiBaseUrl('/api/users/'));
+        const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim();
+        const apiUrl = codespaceName
+          ? `https://${codespaceName}-8000.app.github.dev/api/users/`
+          : getApiBaseUrl('/api/users/');
+
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error(`Request failed with status ${response.status}`);
         }
